@@ -6,6 +6,12 @@ namespace UsersHierarchy
 
     public class Authorizator
     {
+        // _NESTED TYPES_
+
+        /// <summary>
+        /// Defining AccessAttempt type to store unit information(time, user, role) about all login attempts to system
+        /// </summary>
+        /// 
         public struct AccessAttempt
         {
             public DateTime    time;
@@ -20,10 +26,31 @@ namespace UsersHierarchy
             }
         }
 
+
+
+
+
+        // _FIELDS_
+
+        /// <summary>
+        /// Stores list of system access attempts
+        /// </summary>
+        /// 
         public List<AccessAttempt> listOfAccessAttempts;
 
+
+        /// <summary>
+        /// Stores list of defined users
+        /// </summary>
+        /// 
         public List<User> listOfAllUsers;
-        // public void AddUser(User new_user) // not neccessary for now, there is a public access to list
+ 
+
+
+
+
+
+        // _CONSTRUCTOR_
 
         public Authorizator()
         {
@@ -31,6 +58,54 @@ namespace UsersHierarchy
             listOfAccessAttempts = new List<AccessAttempt>();
         }
 
+
+
+
+
+        // _METHODS_
+
+        /// <summary>
+        /// Verifies input credentials
+        /// Returns valid user if verified, and returns null if password is wrong
+        /// Record in Access Attempts list
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        public User getVerifiedUser()
+        {
+            Console.Write("\nEnter username : ");
+            string username = Console.ReadLine();
+            User definedUser = getUserByName(username);
+            if (null != definedUser)
+            {
+                UpdateAccessAttemptsList(new AccessAttempt(DateTime.Now, username, definedUser.role));
+                if (definedUser.CredentialsFromConsoleAreVerified())
+                {
+
+                    return definedUser;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                User newBasicUser = new User(username);
+                UpdateAccessAttemptsList(new AccessAttempt(DateTime.Now, username, newBasicUser.role));
+                return newBasicUser;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// get user by name
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>user from the list</returns>
+        /// 
         public User getUserByName(string username)
         {
             for (var i = 0; i < listOfAllUsers.Count; ++i)
@@ -43,39 +118,25 @@ namespace UsersHierarchy
             return null;
         }
 
-        public User getVerifiedUser()
-        {
-            Console.Write("\nEnter username : ");
-            string username = Console.ReadLine();
-            User definedUser = getUserByName(username);
-            if (null != definedUser)
-            {
-                UpdateAccessAttemptsList(new AccessAttempt(DateTime.Now, username, definedUser.role ));
-                if (definedUser.CredentialsFromConsoleAreVerified())
-                {
-                    
-                    return definedUser;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                User newBasicUser = new User(username);
-                UpdateAccessAttemptsList(new AccessAttempt(DateTime.Now, username, newBasicUser.role ));
-                return newBasicUser;
-            }
 
-        }
+        
 
+        /// <summary>
+        /// Updates Access Attempts list
+        /// </summary>
+        /// <param name="attempt"></param>
+        /// 
         public void UpdateAccessAttemptsList(AccessAttempt attempt)
         {
             this.listOfAccessAttempts.Add(attempt);
         }
 
 
+
+        /// <summary>
+        /// Outputs Access Attempts list
+        /// </summary>
+        /// 
         public void OutputAccessAttemptsList()
         {
             Console.WriteLine("\nSystem access attempts");

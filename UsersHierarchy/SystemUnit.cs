@@ -4,12 +4,22 @@ namespace UsersHierarchy
 {
     class SystemUnit
     {
-        //FIELDS
+        // _FIELDS_
+
+        /// <summary>
+        /// Sustem Unit keeps instances of currentUser, authorizator and commandPrompt
+        /// </summary>
         public User currentUser;
         public Authorizator authorizator_instance;
         public CommandPrompt commandPrompt;
 
-        //CONSTRUCTOR
+
+
+
+
+
+        // _CONSTRUCTOR_
+
         public SystemUnit()
         {
             this.currentUser = null;
@@ -18,8 +28,15 @@ namespace UsersHierarchy
             this.commandPrompt = new CommandPrompt();
         }
 
-        //INITIALIZE USERS OF SYSTEM
+
+
+
+        // _METHODS_
         
+        /// <summary>
+        /// Initialize users of system
+        /// </summary>
+        /// 
         public void InitializeUsers()
         {
             authorizator_instance.listOfAllUsers.Add(new User("guest"));
@@ -27,6 +44,12 @@ namespace UsersHierarchy
             authorizator_instance.listOfAllUsers.Add(new Admin("admin", "admin", "key"));
         }
 
+
+
+        /// <summary>
+        /// Run Session of System unit by login authorized user and running CommandPrompt, on logout (EXIT command) prints all access attempts
+        /// </summary>
+        /// 
         public void RunSession()
         {
             while(true)
@@ -35,6 +58,7 @@ namespace UsersHierarchy
                 if ( null != currentUser)
                 {
                     this.commandPrompt.Run(currentUser);
+                    authorizator_instance.OutputAccessAttemptsList();
                     currentUser = null;
                 }
             }

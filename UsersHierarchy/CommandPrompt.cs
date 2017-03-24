@@ -5,7 +5,12 @@ namespace UsersHierarchy
 {
     class CommandPrompt
     {
-        //NESTED TYPES
+        // _NESTED TYPES_
+
+        /// <summary> 
+        /// Define type Command to store (CommandName, arguments) pair
+        /// </summary>
+        /// 
         public struct Command
         {
             public enum CommandName
@@ -19,16 +24,45 @@ namespace UsersHierarchy
             public CommandName commandName;
         }
 
-        //FIELDS
+
+
+
+
+
+        // _FIELDS_
+
+        /// <summary>
+        /// store currentUser and current command in Command prompt
+        /// currentUser is needed for the Role knowledge, there can be a commands that depends on Roles
+        /// </summary>
+        /// 
         public User currentUser;
         public Command command;
 
-        //CONSTRUCTOR
+
+
+
+
+
+        // _CONSTRUCTOR_
+
         public CommandPrompt()
         {
             this.currentUser = null;
         }
 
+
+
+
+
+        // _METHODS_
+
+        /// <summary>
+        /// Parsing given string into command
+        /// </summary>
+        /// <param name="commandLine"></param>
+        /// <returns>Command</returns>
+        /// 
         public Command Parse( string commandLine)
         {
             Command cmd;
@@ -50,6 +84,13 @@ namespace UsersHierarchy
             return cmd;
         }
 
+
+
+        /// <summary>
+        /// Run Command Prompt for the given user
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// 
         public void Run(User currentUser)
         {
             this.currentUser = currentUser;
@@ -73,9 +114,6 @@ namespace UsersHierarchy
             }
             this.currentUser = null; // optional
         }
-        
-
-
 
     }
 }
