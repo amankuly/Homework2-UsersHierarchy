@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorizator.cs" />
+    <Compile Include="CommandPrompt.cs" />
+    <Compile Include="SystemUnit.cs" />
     <Compile Include="Users.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

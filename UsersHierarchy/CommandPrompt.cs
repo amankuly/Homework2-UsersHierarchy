@@ -11,7 +11,8 @@ namespace UsersHierarchy
             public enum CommandName
             {
                 PRINT,
-                EXIT
+                EXIT,
+                INVALID,
             };
 
             public string arguments;
@@ -32,19 +33,48 @@ namespace UsersHierarchy
         {
             Command cmd;
             if ( commandLine.StartsWith("PRINT") )
+            {
                 cmd.commandName = Command.CommandName.PRINT;
+                cmd.arguments = commandLine.Substring(5);
+            }
+            else if ( commandLine.StartsWith("EXIT") )
+            {
+                cmd.commandName = Command.CommandName.EXIT;
+                cmd.arguments = "";
+            }
+            else
+            {
+                cmd.commandName = Command.CommandName.INVALID;
+                cmd.arguments = "Invalid Command";
+            }
+            return cmd;
         }
 
-        public int Run(User currentUser)
+        public void Run(User currentUser)
         {
             this.currentUser = currentUser;
             this.currentUser.WriteUserInfoToConsole();
-            while(true)
-            {
 
+            bool IsWorking = true;
+            while(IsWorking)
+            {
+                this.command = Parse(Console.ReadLine());
+                switch ( this.command.commandName ) 
+                {
+                    case Command.CommandName.EXIT:
+                        IsWorking = false;
+                        break;
+
+                    default:
+                        Console.WriteLine(this.command.arguments);
+                        break;
+                }
             }
+            this.currentUser = null; // optional
         }
         
+
+
 
     }
 }
