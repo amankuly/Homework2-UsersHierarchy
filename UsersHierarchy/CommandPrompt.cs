@@ -35,7 +35,7 @@ namespace UsersHierarchy
             if ( commandLine.StartsWith("PRINT") )
             {
                 cmd.commandName = Command.CommandName.PRINT;
-                cmd.arguments = commandLine.Substring(5);
+                cmd.arguments = commandLine.Substring(6);
             }
             else if ( commandLine.StartsWith("EXIT") )
             {
@@ -58,6 +58,7 @@ namespace UsersHierarchy
             bool IsWorking = true;
             while(IsWorking)
             {
+                Console.Write("{0}-->", currentUser.username);
                 this.command = Parse(Console.ReadLine());
                 switch ( this.command.commandName ) 
                 {
@@ -66,7 +67,7 @@ namespace UsersHierarchy
                         break;
 
                     default:
-                        Console.WriteLine(this.command.arguments);
+                        Console.WriteLine("{0}-->{1}", currentUser.username, this.command.arguments);
                         break;
                 }
             }

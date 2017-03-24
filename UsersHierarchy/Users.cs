@@ -33,7 +33,13 @@ namespace UsersHierarchy
 
         public virtual void WriteUserInfoToConsole()
         {
-            Console.WriteLine("\nUser-> {0} Role: {1} --> ", this.username, this.role);
+            Console.WriteLine("\nUser: {0}\nRole: {1}", this.username, this.role);
+        }
+
+        protected virtual string GetPassword()
+        {
+            Console.Write("Enter password : ");
+            return Console.ReadLine();
         }
     }
 
@@ -58,17 +64,14 @@ namespace UsersHierarchy
 
         public override bool CredentialsFromConsoleAreVerified()                     
         {
-            WriteUserInfoToConsole();
-            Console.WriteLine("Enter your password: ");
-            // ----->  TODO: hide password in console
-            string enteredPassword = Console.ReadLine();
+            string enteredPassword = GetPassword();
             if(this.password == enteredPassword)
             {
                 return true;
             }
             else
             {
-                Console.WriteLine("wrong password\n");
+                Console.WriteLine("wrong password");
                 return false;
             }
             
@@ -95,10 +98,8 @@ namespace UsersHierarchy
 
         public override bool CredentialsFromConsoleAreVerified()
         {
-            WriteUserInfoToConsole();
-            Console.WriteLine("Enter your password: ");
-            string enteredPassword = Console.ReadLine();
-            Console.WriteLine("Enter administrator key: ");
+            string enteredPassword = GetPassword();
+            Console.Write("Enter administrator key: ");
             string enteredKey = Console.ReadLine();
             if (this.password == enteredPassword && this.key == enteredKey)
             {

@@ -45,7 +45,7 @@ namespace UsersHierarchy
 
         public User getVerifiedUser()
         {
-            Console.WriteLine("\nEnter username :");
+            Console.Write("\nEnter username : ");
             string username = Console.ReadLine();
             User definedUser = getUserByName(username);
             if (null != definedUser)
